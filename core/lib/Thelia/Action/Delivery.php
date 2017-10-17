@@ -29,6 +29,8 @@ class Delivery implements EventSubscriberInterface
      * Get postage from module using the classical module functions
      *
      * @param DeliveryPostageEvent $event
+     * @param $eventName
+     * @param EventDispatcherInterface $dispatcher
      */
     public function getPostage(DeliveryPostageEvent $event, $eventName, EventDispatcherInterface $dispatcher)
     {
@@ -48,9 +50,9 @@ class Delivery implements EventSubscriberInterface
         }
 
         // call legacy module method
-        $event->setValidModule($module->isValidDelivery($event->getCountry()));
+        $event->setValidModule($module->isValidDelivery($event->getCountry(), $event->getState()));
         if ($event->isValidModule()) {
-            $event->setPostage($module->getPostage($event->getCountry()));
+            $event->setPostage($module->getPostage($event->getCountry(), $event->getState()));
         }
     }
 

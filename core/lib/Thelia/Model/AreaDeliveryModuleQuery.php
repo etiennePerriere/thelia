@@ -34,7 +34,8 @@ class AreaDeliveryModuleQuery extends BaseAreaDeliveryModuleQuery
 
         /** @var CountryArea $countryInArea */
         foreach ($countryInAreaList as $countryInArea) {
-            $response = self::create()->filterByAreaId($countryInArea->getAreaId())
+            $response = self::create()
+                ->filterByAreaId($countryInArea->getAreaId())
                 ->filterByModule($module)
                 ->findOne()
             ;

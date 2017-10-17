@@ -18,6 +18,7 @@ use Thelia\Model\Country;
 use Thelia\Model\LangQuery;
 use Thelia\Model\Message;
 use Thelia\Model\MessageQuery;
+use Thelia\Model\State;
 use Thelia\Module\AbstractDeliveryModule;
 use Thelia\Module\Exception\DeliveryException;
 
@@ -32,17 +33,18 @@ class VirtualProductDelivery extends AbstractDeliveryModule
      * The module is valid if the cart contains only virtual products.
      *
      * @param Country $country
+     * @param State $state
      *
      * @return bool true if there is only virtual products in cart elsewhere false
      */
-    public function isValidDelivery(Country $country)
+    public function isValidDelivery(Country $country, State $state = null)
     {
         return $this->getRequest()->getSession()->getSessionCart($this->getDispatcher())->isVirtual();
     }
 
-    public function getPostage(Country $country)
+    public function getPostage(Country $country, State $state = null)
     {
-        if (!$this->isValidDelivery($country)) {
+        if (!$this->isValidDelivery($country, $state)) {
             throw new DeliveryException(
                 $this->trans("This module cannot be used on the current cart.")
             );

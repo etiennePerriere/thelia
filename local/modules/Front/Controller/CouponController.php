@@ -97,7 +97,7 @@ class CouponController extends BaseFrontController
 
                     try {
                         $postage = OrderPostage::loadFromPostage(
-                            $moduleInstance->getPostage($deliveryAddress->getCountry())
+                            $moduleInstance->getPostage($deliveryAddress->getCountry(), $deliveryAddress->getState())
                         );
 
                         $orderEvent->setPostage($postage->getAmount());
